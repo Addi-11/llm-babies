@@ -30,7 +30,7 @@ def main():
 
     st.markdown("<h1 style='text-align: center; color: black;'>Movie Recommender System</h1>", unsafe_allow_html=True)
     st.markdown("<h4 style='text-align: center; color: black;'>Find a similar movie from a dataset of 5,000 movies!</h4>", unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center; color: black;'>Web App created by with love</h4>", unsafe_allow_html=True)
+    st.markdown("<h4 style='text-align: center; color: black;'>test webapp</h4>", unsafe_allow_html=True)
 
     movie_list = movies['title'].values
     selected_movie = st.selectbox(
@@ -39,7 +39,7 @@ def main():
     )
 
     if st.button('Show Recommendation'):
-        st.write("Recommended moveies based on your interest are :")
+        st.write("Recommended movies based on your interest are :")
         recommended_movie_names, recommended_movie_posters = recommend(selected_movie)
         cols= st.columns(5)
         for i, col in enumerate(cols):
