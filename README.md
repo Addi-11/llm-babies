@@ -2,12 +2,10 @@
 
 ## Basic Projects
 
-1. **LLM Chat App:**
-   - **Description:** Simple chatbot using a pre-trained LLM from Hugging Face API.
-   - **Tools:** Streamlit, Hugging Face API
-   - **Reference:** [Streamlit Interface Tutorial](https://docs.streamlit.io/develop/tutorials/llms/llm-quickstart)
+1. **[LLM Chat App:](./llm-chat-app/)**
+   - **Description:** Simple chatbot interface for openai model
 
-2. **Movie Recommender Web-Application:**
+2. **[Movie Recommender Web-Application:](./movie-recommender-webapp/)**
    - **Description:** A simple recommender system using cosine similarity on movie tags to give suggestions.
 
 ## Tokenization and Pre-training
