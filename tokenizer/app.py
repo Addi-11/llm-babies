@@ -1,14 +1,18 @@
 import streamlit as st
 import pickle
 import tiktoken
+import matplotlib.pyplot as plt
 from regex_tokenizer import RegexTokenizer
+from evaluation import HindiTokenizerEvaluation
 
+st.set_page_config(layout="wide")
+
+# Define pastel colors
 pastel_colors = [
     "#E0F2FE", "#FEF3C7", "#BFDBFE", "#D1FAE5", "#FBD38D", "#C4F1F9", "#E5E7EB", "#D6BCFA", "#C4B5FD", "#E2F5D8", "#FECACA", "#D6BCFA", "#F9E2B1", "#D1FAE5", "#E4E4E7", "#FEE2E2",  "#F5A8F2", "#FBCFE8", "#A7F3D0"
 ]
 
 st.title("Hindi Tokenizer Visualizer")
-text = st.text_area("Enter text to tokenize", "नमस्ते दुनिया!")
 
 def load_tokenizer(filename):
     """Load and return the tokenizer from a pickle file."""
@@ -25,7 +29,7 @@ def create_token_dict(encoded_tokens, tokenizer):
 def highlight(items):
     """Generate HTML for highlighted text with pastel colors."""
     highlighted_text = ""
-    i=0
+    i = 0
     for item in items:
         color = pastel_colors[i % len(pastel_colors)]
         highlighted_text += f"<span style='background-color: {color}; padding: 2px;'>{item}</span> "
@@ -41,19 +45,59 @@ def render_html_section(title, html_content):
         </div>
     """, unsafe_allow_html=True)
 
+def display_evaluation_metrics(evaluator, text):
+    """Display evaluation metrics for the given text."""
+    metrics = {
+        "Fertility Score": evaluator.fertility_score(text),
+        "Token Coverage": evaluator.token_coverage(text),
+        "Subword Count": evaluator.subword_count(text),
+        "Compression Ratio": evaluator.compression_ratio(text),
+        "Perplexity": evaluator.perplexity(text),
+        "Consistency": evaluator.consistency([text]),
+        "Tokenization Speed": evaluator.tokenization_speed(text),
+        "Alignment with Linguistic Units": evaluator.alignment_with_linguistic_units(text),
+        "Entropy": evaluator.entropy(text),
+        "Character Coverage": evaluator.character_coverage(text),
+    }
+
+    st.subheader("Evaluation Metrics")
+    for metric, value in metrics.items():
+        st.write(f"**{metric}**: {value}")
+
+    # Token length distribution
+    token_lengths, bin_edges = evaluator.token_length_distribution(text)
+    st.subheader("Token Length Distribution")
+    fig, ax = plt.subplots()
+    ax.bar(bin_edges[:-1], token_lengths, width=bin_edges[1] - bin_edges[0], color='skyblue', edgecolor='black')
+    ax.set_xlabel('Token Length')
+    ax.set_ylabel('Frequency')
+    ax.set_title('Token Length Distribution')
+    st.pyplot(fig)
+
 def main():
-    # tokenizer = load_tokenizer('hindi_tokenizer.pkl')
-    tokenizer = tiktoken.get_encoding("o200k_base")
+    tokenizer = load_tokenizer('hindi_tokenizer.pkl')
+    # tokenizer = tiktoken.get_encoding("o200k_base")
+    evaluator = HindiTokenizerEvaluation(tokenizer)
+    
 
-    if st.button("Tokenize"):
-        encoded_tokens = tokenizer.encode(text)
-        token_dict = create_token_dict(encoded_tokens, tokenizer)
+    col1, col2 = st.columns([1.5, 1])
 
-        highlighted_text = highlight(token_dict.values())
-        render_html_section("Highlighted Text", highlighted_text)
+    with col1:
+        text = st.text_area("Enter text to tokenize", "नमस्ते दुनिया!")
+        if st.button("Tokenize"):
+        
+            encoded_tokens = tokenizer.encode(text)
+            token_dict = create_token_dict(encoded_tokens, tokenizer)
 
-        token_list = highlight(token_dict.keys())
-        render_html_section("Corresponding Tokens", token_list)
+            highlighted_text = highlight(token_dict.values())
+            render_html_section("Highlighted Text", highlighted_text)
+
+            token_list = highlight(token_dict.keys())
+            render_html_section("Corresponding Tokens", token_list)
+
+            with col2:
+                display_evaluation_metrics(evaluator, text)
+
 
 if __name__ == "__main__":
     main()
