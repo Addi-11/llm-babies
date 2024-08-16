@@ -1,2 +1,12 @@
 # all model files
 *.pkl
+
+# data files
+*test.csv
+*train.csv
+hindi.txt
+
+# cache
+*cache__
+
+*keys.*

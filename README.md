@@ -2,8 +2,8 @@
 
 ## Basic Projects
 
-1. **[LLM Chat App:](./llm-chat-app/)**
-   - **Description:** Simple chatbot interface for openai model
+1. **[LLM Chat App Interface:](./llm-chat-app/)**
+   - **Description:** Simple chatbot interface using openai endpoints
 
 2. **[Movie Recommender Web-Application:](./movie-recommender-webapp/)**
    - **Description:** A simple recommender system using cosine similarity on movie tags to give suggestions.
@@ -11,8 +11,8 @@
 ## Tokenization and Pre-training
 
 3. **Tokenization:**
-   - **Description:** Custom tokenizer for Hindi language using BPE.
-   - **Visualization:** Visualize the tokenization process and results.
+   - **Description:** Visualizing the process as well. Custom tokenizer for Hindi language using BPE.
+   - **Reference:** [Tik-token visualizer](https://github.com/dqbd/tiktokenizer)
 
 4. **Pre-training of LLMs [TBD]:**
    - **Description:** Simulate a mini pre-training process using a small dataset and an LLM architecture.
@@ -54,6 +54,9 @@
     - **Description:** Build an SVM classifier to categorize text into predefined categories.
 
 ## Advanced Projects
+
+13. **LLM Agents / OpenAI Assistants[TBD]:** 
+    - **Description:** 
 
 14. **Text Generation and Creative Writing [TBD]:**
     - **Description:** Create a short story generator that uses prompts to generate creative narratives.
