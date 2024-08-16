@@ -3,14 +3,15 @@ import numpy as np
 import nltk
 from collections import defaultdict
 from math import log2, inf
+from hindi_tokenizer import HINDI_SPLIT_PATTERN
 
-class HindiTokenizerEvaluation:
+class TokenizerEvaluation:
     def __init__(self, tokenizer):
         self.tokenizer = tokenizer
 
     def split_hindi_words(self, text):
         # Regular expression for splitting Hindi words
-        pattern = re.compile(r'\b[\u0900-\u097F]+\b')
+        pattern = re.compile(HINDI_SPLIT_PATTERN)
         words = pattern.findall(text)
         return words
 
@@ -31,10 +32,18 @@ class HindiTokenizerEvaluation:
         return np.histogram(token_lengths, bins=range(max(token_lengths) + 2))
 
     def token_coverage(self, text):
-        tokens = self.tokenizer.encode(text)
+        enc_tokens = self.tokenizer.encode(text)
+
+        decoded_tokens = self.tokenizer.decode(enc_tokens)
         words = self.split_hindi_words(text)
-        covered_words = sum(1 for word in words if word in tokens)
-        return covered_words / len(words) if words else 0
+
+        s_tokens = set(decoded_tokens)
+        s_words = set(words)
+
+        covered_words = s_words.intersection(s_tokens)
+
+        return len(covered_words) / len(words) if words else 0
+
 
     def subword_count(self, text):
         tokens = self.tokenizer.encode(text)
@@ -70,6 +79,7 @@ class HindiTokenizerEvaluation:
         return consistency_ratio
 
     def robustness_to_oov(self, text, oov_words):
+        # out of vocabulary tokens
         tokens = self.tokenizer.encode(text)
         oov_handling = sum(1 for word in oov_words if word in tokens)
         return oov_handling / len(oov_words) if oov_words else 0
@@ -81,12 +91,6 @@ class HindiTokenizerEvaluation:
             self.tokenizer.encode(text)
         end_time = time.time()
         return (end_time - start_time) / repetitions
-
-    def alignment_with_linguistic_units(self, text):
-        tokens = self.tokenizer.encode(text)
-        words = self.split_hindi_words(text)
-        aligned_tokens = sum(1 for word in words if word in tokens)
-        return aligned_tokens / len(words) if words else 0
 
     def entropy(self, text):
         tokens = self.tokenizer.encode(text)
@@ -106,7 +110,11 @@ class HindiTokenizerEvaluation:
 
     def character_coverage(self, text):
         chars = set(text)
-        covered_chars = sum(1 for char in chars if char in self.tokenizer.vocab)
+        vocab_chars = set()
+        for byte_string in self.tokenizer.vocab.values():
+            vocab_chars.update(byte_string.decode("utf-8", errors="replace"))
+        
+        covered_chars = sum(1 for char in chars if char in vocab_chars)
         return covered_chars / len(chars) if chars else 0
 
     def back_translation_score(self, translated_text, original_text):

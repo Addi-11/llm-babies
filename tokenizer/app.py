@@ -3,7 +3,7 @@ import pickle
 import tiktoken
 import matplotlib.pyplot as plt
 from regex_tokenizer import RegexTokenizer
-from evaluation import HindiTokenizerEvaluation
+from evaluation import TokenizerEvaluation
 
 st.set_page_config(layout="wide")
 
@@ -48,6 +48,7 @@ def render_html_section(title, html_content):
 def display_evaluation_metrics(evaluator, text):
     """Display evaluation metrics for the given text."""
     metrics = {
+        "Vocabulary Size": evaluator.vocabulary_size(),
         "Fertility Score": evaluator.fertility_score(text),
         "Token Coverage": evaluator.token_coverage(text),
         "Subword Count": evaluator.subword_count(text),
@@ -55,7 +56,6 @@ def display_evaluation_metrics(evaluator, text):
         "Perplexity": evaluator.perplexity(text),
         "Consistency": evaluator.consistency([text]),
         "Tokenization Speed": evaluator.tokenization_speed(text),
-        "Alignment with Linguistic Units": evaluator.alignment_with_linguistic_units(text),
         "Entropy": evaluator.entropy(text),
         "Character Coverage": evaluator.character_coverage(text),
     }
@@ -68,7 +68,7 @@ def display_evaluation_metrics(evaluator, text):
     token_lengths, bin_edges = evaluator.token_length_distribution(text)
     st.subheader("Token Length Distribution")
     fig, ax = plt.subplots()
-    ax.bar(bin_edges[:-1], token_lengths, width=bin_edges[1] - bin_edges[0], color='skyblue', edgecolor='black')
+    ax.bar(bin_edges[:-1], token_lengths, width=bin_edges[1] - bin_edges[0], color='skyblue')
     ax.set_xlabel('Token Length')
     ax.set_ylabel('Frequency')
     ax.set_title('Token Length Distribution')
@@ -77,7 +77,7 @@ def display_evaluation_metrics(evaluator, text):
 def main():
     tokenizer = load_tokenizer('hindi_tokenizer.pkl')
     # tokenizer = tiktoken.get_encoding("o200k_base")
-    evaluator = HindiTokenizerEvaluation(tokenizer)
+    evaluator = TokenizerEvaluation(tokenizer)
     
 
     col1, col2 = st.columns([1.5, 1])
