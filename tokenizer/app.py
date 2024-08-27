@@ -75,7 +75,8 @@ def display_evaluation_metrics(evaluator, text):
     st.pyplot(fig)
 
 def main():
-    tokenizer = load_tokenizer('hindi_tokenizer.pkl')
+    tokenizer = load_tokenizer('hindi_tokenizer/hindi_tokenizer.pkl')
+    # tokenizer = load_tokenizer('reg_tokenizer/reg_tokenizer_11550steps.pkl')
     # tokenizer = tiktoken.get_encoding("o200k_base")
     evaluator = TokenizerEvaluation(tokenizer)
     

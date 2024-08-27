@@ -10,12 +10,15 @@
 
 ## Tokenization and Pre-training
 
-3. **Tokenization:**
+3. **[Hindi Lanugage Tokenization:](./tokenizer/)**
    - **Description:** Visualizing the process as well. Custom tokenizer for Hindi language using BPE.
+   ![](./images/hindi_tokenizer.mp4)
    - **Reference:** [Tik-token visualizer](https://github.com/dqbd/tiktokenizer)
 
-4. **Pre-training of LLMs [TBD]:**
+4. **Pre-training TinyLlama model:**
    - **Description:** Simulate a mini pre-training process using a small dataset and an LLM architecture.
+
+5. **Instruction Tuning [TBD]:**
 
 5. **Mid-training Techniques [TBD]:**
    - **Description:** Experiment with mid-training by fine-tuning a pre-trained model on a specialized dataset.
