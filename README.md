@@ -12,8 +12,9 @@
 
 3. **[Hindi Lanugage Tokenization:](./tokenizer/)**
    - **Description:** Visualizing the process as well. Custom tokenizer for Hindi language using BPE.
-   ![](./images/hindi_tokenizer.mp4)
-   - **Reference:** [Tik-token visualizer](https://github.com/dqbd/tiktokenizer)
+
+      https://github.com/user-attachments/assets/c73c4896-7930-4ceb-947d-67cab25a7a73
+   - **Inspiration:** [Tik-token visualizer](https://github.com/dqbd/tiktokenizer)
 
 4. **Pre-training TinyLlama model:**
    - **Description:** Simulate a mini pre-training process using a small dataset and an LLM architecture.
