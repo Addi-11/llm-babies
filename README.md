@@ -3,7 +3,9 @@
 ## Basic Projects
 
 1. **[LLM Chat App Interface:](./llm-chat-app/)**
-   - **Description:** Simple chatbot interface using openai endpoints
+   - **Description:** Simple chatbot interface using openai endpoints.
+     
+      https://github.com/user-attachments/assets/2a60f726-7ae5-47df-8523-1b37872a06fe
 
 2. **[Movie Recommender Web-Application:](./movie-recommender-webapp/)**
    - **Description:** A simple recommender system using cosine similarity on movie tags to give suggestions.
